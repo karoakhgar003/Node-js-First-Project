@@ -1,8 +1,14 @@
-var http = require('http')
+var http = require('http');
+
+var anyBody = require("body/any")
 
 http.createServer(function(req, res){
-        console.log(req);
-        res.writeHead(200, {'Content-Type' : 'text/plain'})
-        res.end('hello world2')
+    let data;
+    anyBody(req, res, {}, (err,data)=>{
+        data = data.data
+        let result = " My name is " + data.name + ".\n I'm " + data.age + " years old.\n My email is: " + data.email
+        res.end(result)
+    })
+    res.writeHead(200, {'Content-Type' : 'text/plain'});
 
-}).listen(1338,'127.0.0.1')
+}).listen(1338,'127.0.0.1');

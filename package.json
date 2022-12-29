@@ -1,0 +1,24 @@
+{
+  "name": "first-nodejs-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "First.js",
+  "dependencies": {
+    "body": "^5.1.0",
+    "axios": "^1.2.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/karoakhgar003/Node-js-First-Project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/karoakhgar003/Node-js-First-Project/issues"
+  },
+  "homepage": "https://github.com/karoakhgar003/Node-js-First-Project#readme"
+}

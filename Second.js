@@ -1,27 +1,32 @@
 var http = require('http');
-var axios = require('axios')
-var anyBody = require("body/any")
 
 
-let sendData = function(url,path,data) {
-        const api = axios.create({baseURL: url})
-        api.post(path, {
-        data: data
+let sendData = function(url,port,path,data) {
+        const options = {
+            protocol: "http:",
+            hostname: url,
+            port: port,
+            path: path,
+            method: "POST",
+          };
+        
+        var post_req = http.request(options, function(res) {
+            res.setEncoding('utf8');
+            res.on('data', function (chunk) {
+                console.log('Response: ' + chunk);
+            });
         })
-        .then(res => {
-        console.log(res.data)
-        })
-        .catch(error => {
-        console.log(error)
-        })
+        post_req.write(JSON.stringify(data)) 
+        post_req.end()
 }
 
 http.createServer(function(req, res){
-    let data;
-    anyBody(req, res, {}, (err,data)=>{
-        data = data.data
+    const chunks = [];
+    req.on('data', chunk => chunks.push(chunk));
+    req.on('end', () => {
+        const data = JSON.parse((Buffer.concat(chunks).toString()));
         let result = " My name is " + data.name + ".\n I'm " + data.age + " years old.\n My email is: " + data.email
-        sendData('http://127.0.0.1:1339','/',data)
+        sendData('127.0.0.1','1339','/',data)
         res.end(result)
     })
     res.writeHead(200, {'Content-Type' : 'text/plain'});

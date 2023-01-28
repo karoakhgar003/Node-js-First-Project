@@ -1,5 +1,4 @@
 var http = require('http')
-var axios = require('axios')
 
 const data = {name: 'karo', age: 18, email: 'karoakhgar82@hotmail.com'}
 http.createServer(function(req, res){
@@ -9,13 +8,19 @@ http.createServer(function(req, res){
 
 }).listen(1337,'127.0.0.1')
 
-const api = axios.create({baseURL: 'http://127.0.0.1:1338'})
-api.post('/', {
-    data: data
+const options = {
+    protocol: "http:",
+    hostname: "127.0.0.1",
+    port: "1338",
+    path: "/",
+    method: "POST", // <-- POST the data
+  };
+
+var post_req = http.request(options, function(res) {
+    res.setEncoding('utf8');
+    res.on('data', function (chunk) {
+        console.log('Response: ' + chunk);
+    });
 })
-.then(res => {
-     console.log(res.data)
-})
-.catch(error => {
-     console.log(error)
-})
+post_req.write(JSON.stringify(data)) 
+post_req.end()
